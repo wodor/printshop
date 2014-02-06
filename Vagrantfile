@@ -17,11 +17,13 @@ Vagrant.configure("2") do |config|
     config.vm.network "private_network", ip: "#{data['vm']['network']['private_network']}"
   end
 
-  data['vm']['network']['forwarded_port'].each do |i, port|
-    if port['guest'] != '' && port['host'] != ''
-      config.vm.network :forwarded_port, guest: port['guest'].to_i, host: port['host'].to_i
-    end
-  end
+  #data['vm']['network']['forwarded_port'].each do |i, port|
+  #  if port['guest'] != '' && port['host'] != ''
+  #    config.vm.network :forwarded_port, guest: port['guest'].to_i, host: port['host'].to_i
+  #  end
+  #end
+
+  config.vm.synced_folder "./", "/project", :nfs => true
 
   data['vm']['synced_folder'].each do |i, folder|
     if folder['source'] != '' && folder['target'] != '' && folder['id'] != ''

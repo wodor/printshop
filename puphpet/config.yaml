@@ -65,10 +65,10 @@ apache:
         - rewrite
     vhosts:
         WTvBR7jXhMRa:
-            servername: awesome.dev
+            servername: printshop.dev
             serveraliases:
-                - www.awesome.dev
-            docroot: /var/www/awesome
+                - www.printshop.dev
+            docroot: /project/web
             port: '80'
             setenv:
                 - 'APP_ENV dev'

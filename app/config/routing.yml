@@ -1,0 +1,5 @@
+wodor_net_print_shop:
+    resource: "@WodorNetPrintShopBundle/Controller/"
+    type:     annotation
+    prefix:   /
+

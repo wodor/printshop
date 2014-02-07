@@ -3,6 +3,7 @@
 namespace WodorNet\PrintShopBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use FOS\UserBundle\Model\User as BaseUser;
 /**
  * @ORM\Entity
@@ -18,10 +19,20 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @return mixed
+     * @ORM\OneToOne(targetEntity="Invitation", inversedBy="user")
+     * @ORM\JoinColumn(referencedColumnName="code")
+     * @Assert\NotNull(message="Your invitation code is wrong")
      */
-    public function getId()
+    protected $invitation;
+
+    public function setInvitation(Invitation $invitation)
     {
-        return $this->id;
+        $this->invitation = $invitation;
     }
+
+    public function getInvitation()
+    {
+        return $this->invitation;
+    }
+
 }

@@ -23,7 +23,6 @@ Vagrant.configure("2") do |config|
   #  end
   #end
 
-  config.vm.synced_folder "./", "/project", :nfs => true
 
   data['vm']['synced_folder'].each do |i, folder|
     if folder['source'] != '' && folder['target'] != '' && folder['id'] != ''
@@ -32,6 +31,7 @@ Vagrant.configure("2") do |config|
     end
   end
 
+  config.vm.synced_folder "./", "/project", :nfs => true
   config.vm.usable_port_range = (10200..10500)
 
   if !data['vm']['provider']['virtualbox'].empty?

@@ -105,79 +105,23 @@ class FeatureContext extends PageObjectContext implements KernelAwareInterface
     public function naPulpicieWidzeNastepujaceZlecenia(TableNode $table)
     {
         $hash = $table->getHash();
-
         $dashboard = $this->getPage('Dashboard');
         $dashboard->open();
-        expect($dashboard)->toHaveTaskOnTheList($hash[0]['numer']);
-
+        expect($dashboard)->toHaveFollowingTasksOnTheListInOrder($hash);
     }
 
     /**
-     * @Given /^klikam przycisk dodaj zlecenie$/
+     * @Given /^powinienem widziec "([^"]*)" w specyfikacji zlecenia "(\d+)"$/
      */
-    public function klikamPrzyciskDodajZlecenie()
+    public function powinienemWidziecDlugitextWSpecyfikacjiZlecenia($description, $taskNumber)
     {
-        throw new \PhpSpec\Exception\Example\PendingException();
+        $dashboard = $this->getPage('Dashboard');
+        $dashboard->open();
+        expect($dashboard)->toHaveFollowingValueInDescritpionOfTask($taskNumber, $description);
     }
 
     /**
-     * @Given /^wprowadzam następujące zlecenie poprzez formularz:$/
-     */
-    public function wprowadzamNastepujaceZleceniePoprzezFormularz(TableNode $table)
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @Given /^Powinienem na liscie wszystkich zlecen zobaczyc nastepujace zlecenia:$/
-     */
-    public function powinienemNaLiscieWszystkichZlecenZobaczycNastepujaceZlecenia(TableNode $table)
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @Given /^wchodzę na listę wszystkich zlecen$/
-     */
-    public function wchodzeNaListeWszystkichZlecen()
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @Given /^Powinienem zobaczyc nastepujaca liste zlecen:$/
-     */
-    public function powinienemZobaczycNastepujacaListeZlecen(TableNode $table)
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @Given /^w filtrze “Klient” wybieram “BMW”:$/
-     */
-    public function wFiltrzeKlientWybieramBmw()
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @Given /^ze jestem zalogowany jako operator$/
-     */
-    public function zeJestemZalogowanyJakoOperator()
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @Given /^powinienem widziec “dlugitext” po rozwinieciu zlecenia “(\d+)"$/
-     */
-    public function powinienemWidziecDlugitextPoRozwinieciuZlecenia($arg1)
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @Given /^klikam na link Edytuj przy zleceniu “(\d+)”$/
+     * @Given /^klikam na link Edytuj przy zleceniu "([^"]*)"$/
      */
     public function klikamNaLinkEdytujPrzyZleceniu($arg1)
     {
@@ -193,9 +137,9 @@ class FeatureContext extends PageObjectContext implements KernelAwareInterface
     }
 
     /**
-     * @Given /^zmieniam opis na “folia cienka”$/
+     * @Given /^zmieniam opis na "([^"]*)"$/
      */
-    public function zmieniamOpisNaFoliaCienka()
+    public function zmieniamOpisNa($arg1)
     {
         throw new PendingException();
     }
@@ -217,19 +161,20 @@ class FeatureContext extends PageObjectContext implements KernelAwareInterface
     }
 
     /**
-     * @Given /^widzę opis “folia cienka” przy zleceniu “(\d+)”$/
+     * @Given /^widzę opis "([^"]*)"  przy zleceniu "([^"]*)"$/
      */
-    public function widzeOpisFoliaCienkaPrzyZleceniu($arg1)
+    public function widzeOpisPrzyZleceniu($arg1, $arg2)
     {
         throw new PendingException();
     }
 
     /**
-     * @Given /^w historii zmian zlecenia “(\d+)” widzę$/
+     * @Given /^w historii zmian zlecenia "([^"]*)"  widzę$/
      */
     public function wHistoriiZmianZleceniaWidze($arg1, TableNode $table)
     {
         throw new PendingException();
     }
+
 }
 

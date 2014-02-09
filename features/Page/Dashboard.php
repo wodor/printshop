@@ -2,27 +2,65 @@
 
 namespace Page;
 
+use Behat\Mink\Element\NodeElement;
 use SensioLabs\Behat\PageObjectExtension\PageObject\Page;
+use Symfony\Component\Serializer\Exception\LogicException;
 
 class Dashboard extends Page
 {
     protected $path = 'dashboard';
 
+
     protected $elements = array(
         'Tasks' => array('css' => 'div#tasks')
     );
 
-
-    public function hasTaskOnTheList($taskNumber)
+    public function hasFollowingTasksOnTheListInOrder($tasksHash)
     {
-        $tasks = $this->getElement('Tasks')->findAll('css','div#task');
-
+        $numberKey = 'numer';
+        $tasks = $this->getElement('Tasks')->findAll('css','div.task');
+        $tasksList = array_column($tasksHash, $numberKey, $numberKey);
+        $tasksFound  = array();
         foreach($tasks as $taskElement) {
-            //TODO: fix for false positives !
-            if(strpos($taskElement->getText(), $taskNumber) !== false) {
-               return true;
-            }
+            $taskId = substr($taskElement->getAttribute('id'), 5);
+            $tasksFound[$taskId] = $taskId;
         }
-        return false;
+
+        $notFound = array_diff($tasksList, $tasksFound);
+        if(!empty($notFound)) {
+//            return false;
+            throw new LogicException("Expected to see Tasks: " .
+                implode(', ', $tasksList) . ", not found: ".
+                implode(', ', $notFound));
+        }
+
+        if($tasksList !==$tasksFound) {
+            throw new LogicException("Expected to see Tasks: " .
+                implode(', ', $tasksList) . ", but have: ".
+                implode(', ', $tasksFound) . " in wrong order");
+        }
+
+        return true;
+    }
+
+    public function hasFollowingValueInDescritpionOfTask($number, $description)
+    {
+        $taskidSelector = 'div#task_' . $number;
+        $task = $this->getElement('Tasks')->find('css', $taskidSelector);
+
+        if(!$task instanceof NodeElement) {
+            throw new LogicException($taskidSelector . 'not found');
+        }
+
+        $descriptionElement = $task->find('css', '.description');
+        if(!$descriptionElement instanceof NodeElement) {
+            throw new LogicException('#description not found in ' . $taskidSelector);
+        }
+
+        if($descriptionElement->getText() != $description) {
+            throw new LogicException('Description: ' . $description . 'expected, ' . $descriptionElement->getText() . ' found');
+        }
+
+        return true;
     }
 }

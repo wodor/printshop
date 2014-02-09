@@ -21,20 +21,10 @@ Scenariusz: Wyswietlanie listy zlecen
     |  6    |
     |  5    |
     |  4    |
-  I powinienem widziec “dlugitext” po rozwinieciu zlecenia “7"
+  I powinienem widziec "dlugitext" w specyfikacji zlecenia "6"
 
 
-Scenariusz: Operator maszyn moze zmieniac zlecenie
-  Zakładając ze jestem zalogowany jako operator
-  I klikam na link Edytuj przy zleceniu “7”
-  Wtedy widzę formularz edycji zlecenia
-  Kiedy zmieniam opis na “folia cienka”
-  I klikam przycisk zapisz
-  Wtedy jestem na liscie zlecen
-  I widzę opis “folia cienka” przy zleceniu “7”
-  I w historii zmian zlecenia “7” widzę
-      | data    | pole | stara wartosc | nowa wartosc |
-      | dzisiaj | opis | folia         | folia cienka |
+
 
 
 #Scenariusz: Operator maszyn moze zmieniac status zlecenia przyciskiem na liscie

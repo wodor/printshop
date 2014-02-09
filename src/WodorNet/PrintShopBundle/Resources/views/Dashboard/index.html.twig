@@ -1,7 +1,15 @@
 {% extends "base.html.twig" %}
 {% block body %}
 
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
 <div id="tasks">
-    <div id="task">6</div>
+    <div id="task_6" class="task">6<span class="description hidden">dlugitext</span> </div>
+    <div id="task_5" class="task">5</div>
+    <div id="task_4" class="task">4</div>
 </div>
+
 {% endblock body %}

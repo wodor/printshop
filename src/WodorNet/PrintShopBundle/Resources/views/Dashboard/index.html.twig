@@ -7,13 +7,13 @@
         }
     </style>
 <div id="tasks">
-    <div id="task_6" class="task">
-        Numer: 6
-        <span class="description hidden">dlugitext</span>
-        <span class="machinemodel">agfa</span>
+    {% for task in tasks %}
+    <div id="task_{{ task.number }}" class="task">
+        Numer: {{ task.number }}
+        <span class="description">{{ task.description }}</span>
+        <span class="machinemodel">{{ task.machineModel.name }}</span>
     </div>
-    <div id="task_5" class="task">5</div>
-    <div id="task_4" class="task">4</div>
+    {% endfor %}
 </div>
 
 {% endblock body %}

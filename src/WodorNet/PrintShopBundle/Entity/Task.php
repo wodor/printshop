@@ -9,6 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Task
 {
+    const STATUS_READY = 'ready';
+    const STATUS_INPROGRESS = 'in progress';
+    const STATUS_ONHOLD = 'on hold';
+    const STATUS_DONE = 'done';
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -18,40 +22,51 @@ class Task
 
     /**
      * @var string
+     * @ORM\Column(type="string")
      */
     private $number;
+
     /**
      * @var string
+     * @ORM\Column(type="string")
      */
     private $status;
 
     /**
      * @var \DateTime
+     * @ORM\Column(type="datetime")
      */
     private $deadline;
 
     /**
      * @var Customer
+     * @ORM\ManyToOne(targetEntity="Customer", inversedBy="tasks")
+     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
      */
     private $customer;
 
     /**
      * @var string
+     * @ORM\Column(type="string")
      */
     private $description;
 
     /**
      * @var string
+     * @ORM\Column(type="string")
      */
     private $title;
 
     /**
      * @var integer
+     * @ORM\Column(type="integer")
      */
     private $priority;
 
     /**
      * @var MachineModel
+     * @ORM\ManyToOne(targetEntity="MachineModel", inversedBy="machines")
+     * @ORM\JoinColumn(name="machinemodel_id", referencedColumnName="id")
      */
     private $machineModel;
 

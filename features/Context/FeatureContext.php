@@ -28,9 +28,9 @@ class FeatureContext extends PageObjectContext implements KernelAwareInterface
      *
      * @param array $parameters context parameters (set them up through behat.yml)
      */
-    public function __construct(array $parameters)
+    public function __construct(array $parameters = array())
     {
-        // Initialize your context here
+        $this->useContext('doctrine', new DoctrineContext($parameters));
     }
 
     /**
@@ -77,19 +77,52 @@ class FeatureContext extends PageObjectContext implements KernelAwareInterface
     public function thereAreFollowingTasks(TableNode $table)
     {
         foreach($table->getHash() as $taskExample) {
+
+            $customer = $this->findOrCreateCustomer(['name' => $taskExample['klient']]);
+            $machineModel = $this->findOrCreateMachineModel(['name' => $taskExample['maszyna']]);
             $task = new Task();
-            $task->setCustomer(new Customer($taskExample['klient']));
+
+            $task->setCustomer($customer);
             $task->setDeadline(new \DateTime($taskExample['Deadline']));
             $task->setNumber($taskExample['numer']);
             $task->setTitle($taskExample['opis']);
             $task->setDescription($taskExample['specyfikacja']);
             $task->setPriority($taskExample['priorytet']);
-            $task->setStatus($taskExample['status']);
-            $task->setMachineModel(new MachineModel('agfa'));
+            $task->setStatus($this->polishToSystemStatus($taskExample['status']));
+            $task->setMachineModel($machineModel);
             $this->getServiceProvider()->getEntityManager()->persist($task);
         }
         $this->getServiceProvider()->getEntityManager()->flush();
     }
+
+    private function findOrCreateCustomer(array $properties)
+    {
+        $em = $this->getServiceProvider()->getEntityManager();
+        $repo = $em->getRepository("WodorNetPrintShopBundle:Customer");
+        $customer = $repo->findOneByName($properties['name']);
+
+        if(!$customer instanceof Customer) {
+            $customer = new Customer();
+            $customer->setName($properties['name']);
+            $em->persist($customer);
+        }
+        return $customer;
+    }
+
+    private function findOrCreateMachineModel(array $properties)
+    {
+        $em = $this->getServiceProvider()->getEntityManager();
+        $repo = $em->getRepository("WodorNetPrintShopBundle:MachineModel");
+        $customer = $repo->findOneByName($properties['name']);
+
+        if(!$customer instanceof MachineModel) {
+            $customer = new MachineModel();
+            $customer->setName($properties['name']);
+            $em->persist($customer);
+        }
+        return $customer;
+    }
+
     /**
     * @Given /^że jestem zalogowany jako .*$/
     */
@@ -184,6 +217,17 @@ class FeatureContext extends PageObjectContext implements KernelAwareInterface
     public function wHistoriiZmianZleceniaWidze($arg1, TableNode $table)
     {
         throw new PendingException();
+    }
+
+    private function polishToSystemStatus($statusString)
+    {
+        $map = array(
+            'oczekujące' => Task::STATUS_READY,
+            'w produkcji' => Task::STATUS_INPROGRESS,
+            'wstrzymane' => Task::STATUS_ONHOLD,
+            'zakończone' => Task::STATUS_DONE
+        );
+        return $map[$statusString];
     }
 
 }

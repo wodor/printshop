@@ -16,14 +16,15 @@ Zakładając że są następujące zlecenia:
 
 Scenariusz: Wyswietlanie listy zlecen
   Zakładając że jestem zalogowany jako operator
-  Wtedy na pulpicie widzę nastepujace zlecenia:
+  Wtedy powinienem widziec "dlugitext" w specyfikacji zlecenia "6"
+  I powinienem widziec "agfa" w rubryce maszyna zlecenia "6"
+  Oraz na pulpicie widzę nastepujace zlecenia:
     | numer |
     |  6    |
     |  5    |
     |  4    |
-  I powinienem widziec "dlugitext" w specyfikacji zlecenia "6"
-  I powinienem widziec "agfa" w rubryce maszyna zlecenia "6"
-
+#  I powinienem widziec "dlugitext" w specyfikacji zlecenia "5"
+#  I powinienem widziec "agfa" w rubryce maszyna zlecenia "5"
 
 
 

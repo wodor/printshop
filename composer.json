@@ -3,8 +3,14 @@
     "license": "MIT",
     "type": "project",
     "description": "The \"Symfony Standard Edition\" distribution",
-    "autoload": {
-        "psr-0": { "": "src/" }
+    "autoload" : {
+        "psr-0" : {
+            "" : [
+                "src/",
+                "features/"
+            ],
+            "spec" : ""
+        }
     },
     "require": {
         "php": ">=5.3.3",
@@ -21,6 +27,15 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "behat/behat": "*",
         "friendsofsymfony/user-bundle": "2.0.*@dev",
+        "sensiolabs/behat-page-object-extension": "~1.0"
+    },
+    "require-dev": {
+        "behat/behat": "*",
+        "behat/mink-extension" : "*",
+        "behat/mink-browserkit-driver" : "*",
+        "behat/mink-goutte-driver" : "*",
+        "behat/mink-selenium2-driver" : "*",
+        "behat/symfony2-extension" : "*",
         "phpspec/phpspec" : "~2.0@dev"
     },
     "scripts": {

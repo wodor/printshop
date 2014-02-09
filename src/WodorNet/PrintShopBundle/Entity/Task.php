@@ -2,8 +2,20 @@
 
 namespace WodorNet\PrintShopBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ */
 class Task
 {
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
     /**
      * @var string
      */
@@ -27,6 +39,11 @@ class Task
      * @var string
      */
     private $description;
+
+    /**
+     * @var string
+     */
+    private $title;
 
     /**
      * @var integer
@@ -108,6 +125,22 @@ class Task
     public function setDescription($description)
     {
         $this->description = $description;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 
     /**

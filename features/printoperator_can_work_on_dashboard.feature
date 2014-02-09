@@ -15,8 +15,8 @@ Zakładając że są następujące zlecenia:
     | ToiToi | 2014-02-02   |  9    | PCV    | cncnncncc    | 2         | oczekujące  | cnc     |
 
 Scenariusz: Wyswietlanie listy zlecen
-  Zakładając ze jestem zalogowany jako operator
-  Wtedy na pulpicie widzę “druk” zobaczyc nastepujace zlecenia:
+  Zakładając że jestem zalogowany jako operator
+  Wtedy na pulpicie widzę nastepujace zlecenia:
     | numer |
     |  6    |
     |  5    |

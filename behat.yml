@@ -1,0 +1,30 @@
+default:
+    filters:
+        tags: "~@missing-edge-case&&~@wip&&~@postponed"
+    paths:
+        features: features
+    context:
+            class: Context\FeatureContext
+    formatter:
+        name: progress
+        parameters:
+            snippets: true
+            verbose: true
+    extensions:
+        Behat\Symfony2Extension\Extension:
+          kernel:
+            env: test
+        Behat\MinkExtension\Extension:
+            base_url:        'http://printshop.dev/app_test.php'
+            default_session: symfony2
+            browser_name:    firefox
+            goutte:
+                guzzle_parameters:
+                    curl.options:
+                        13: 60 # CURLOPT_TIMEOUT
+                        78: 60 # CURLOPT_CONNECTTIMEOUT
+            selenium2:
+                wd_host: http://10.10.20.3:4444/wd/hub
+        SensioLabs\Behat\PageObjectExtension\Extension:
+            namespaces:
+                page: Page

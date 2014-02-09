@@ -15,11 +15,11 @@ class Dashboard extends Page
 
     public function hasTaskOnTheList($taskNumber)
     {
-        $tasks = $this->getElement('Tasks')->findAll('css', 'div.task');
+        $tasks = $this->getElement('Tasks')->findAll('css','div#task');
 
         foreach($tasks as $taskElement) {
-            //fix for false positives !
-            if(strpos($taskElement->getText(), $taskNumber)) {
+            //TODO: fix for false positives !
+            if(strpos($taskElement->getText(), $taskNumber) !== false) {
                return true;
             }
         }

@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "525e3d7efc4713904d68ebec94105ab8",
+    "hash": "bfdbe4bbe07638546730e04d3b4d78d5",
     "packages": [
         {
             "name": "behat/behat",
@@ -2116,6 +2116,49 @@
             "time": "2014-01-03 22:07:32"
         },
         {
+            "name": "bossa/phpspec2-expect",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BossaConsulting/phpspec2-expect.git",
+                "reference": "ca1ec876b793684462167b9c65b2fef959610c56"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BossaConsulting/phpspec2-expect/zipball/ca1ec876b793684462167b9c65b2fef959610c56",
+                "reference": "ca1ec876b793684462167b9c65b2fef959610c56",
+                "shasum": ""
+            },
+            "require": {
+                "phpspec/phpspec": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "expect.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marcello Duarte",
+                    "homepage": "http://marcelloduarte.net/"
+                }
+            ],
+            "description": "Helper that decorates any SUS with a phpspec lazy object wrapper",
+            "keywords": [
+                "BDD",
+                "SpecBDD",
+                "TDD",
+                "spec",
+                "specification"
+            ],
+            "time": "2013-11-08 11:32:19"
+        },
+        {
             "name": "fabpot/goutte",
             "version": "v1.0.5",
             "source": {
@@ -2594,7 +2637,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "friendsofsymfony/user-bundle": 20,
-        "phpspec/phpspec": 20
+        "phpspec/phpspec": 20,
+        "bossa/phpspec2-expect": 20
     },
     "platform": {
         "php": ">=5.3.3"

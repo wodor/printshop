@@ -7,6 +7,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Behat\Behat\Exception\PendingException;
 use Behat\Gherkin\Node\TableNode;
 use SensioLabs\Behat\PageObjectExtension\Context\PageObjectContext;
+use Symfony\Component\Serializer\Exception\LogicException;
 use WodorNet\PrintShopBundle\Entity\Customer;
 use WodorNet\PrintShopBundle\Entity\MachineModel;
 use WodorNet\PrintShopBundle\Entity\Task;

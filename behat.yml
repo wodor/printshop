@@ -9,7 +9,7 @@ default:
         name: progress
         parameters:
             snippets: true
-            verbose: true
+            verbose: false
     extensions:
         Behat\Symfony2Extension\Extension:
           kernel:

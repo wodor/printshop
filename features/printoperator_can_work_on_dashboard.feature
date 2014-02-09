@@ -4,6 +4,11 @@ Aspekt: Zeby moc obslugiwać maszyny i wykonywać zlecenia
         Muszę widziec listę oczekujacych zleceń wg priorytetu im wyzszy tym wazniejszy
 
 Założenia:
+Zakładając że są następujące modele maszyn:
+  | typ   | nazwa   |
+  | print | agfa    |
+  | print | roland  |
+  | cnc   | cNc     |
 Zakładając że są następujące zlecenia:
     | klient | Deadline     | numer | opis   | specyfikacja | priorytet | status      | maszyna |
     | Makro  | 2014-01-31   |  6    | baner  | dlugitext    | 3         | oczekujące  | agfa    |

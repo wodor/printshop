@@ -27,7 +27,7 @@ class DashboardController extends Controller
         $task->setMachineModel(new MachineModel('agfa'));
 
         $taskRepository = $this->getDoctrine()->getRepository('WodorNetPrintShopBundle:Task');
-        $tasks = $taskRepository->findByStatus(Task::STATUS_READY);
+        $tasks = $taskRepository->findTasksForDashBoard(MachineModel::TYPE_PRINT);
 
         return array('tasks' => $tasks);
 

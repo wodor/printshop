@@ -9,6 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class MachineModel
 {
+    const TYPE_PRINT = 'print';
+    const TYPE_CNC = 'cnc';
+    const TYPE_LASER = 'laser';
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -26,6 +30,12 @@ class MachineModel
      * @ORM\Column(type="string")
      */
     private $name;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $type;
 
     public function getId()
     {
@@ -47,4 +57,21 @@ class MachineModel
     {
         return $this->name;
     }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
 }

@@ -95,6 +95,22 @@ class FeatureContext extends PageObjectContext implements KernelAwareInterface
         $this->getServiceProvider()->getEntityManager()->flush();
     }
 
+    /**
+     * @Given /^że są następujące modele maszyn:$/
+     */
+    public function zeSaNastepujaceModeleMaszyn(TableNode $table)
+    {
+        foreach($table->getHash() as $modelExample) {
+            $model = new MachineModel();
+            $model->setName($modelExample['nazwa']);
+            $model->setType($modelExample['typ']);
+            $this->getServiceProvider()->getEntityManager()->persist($model);
+        }
+        $this->getServiceProvider()->getEntityManager()->flush();
+
+    }
+
+
     private function findOrCreateCustomer(array $properties)
     {
         $em = $this->getServiceProvider()->getEntityManager();
@@ -116,6 +132,9 @@ class FeatureContext extends PageObjectContext implements KernelAwareInterface
         $customer = $repo->findOneByName($properties['name']);
 
         if(!$customer instanceof MachineModel) {
+            if(!isset($properties['type'])) {
+                throw new \LogicException("Can't add model without type");
+            }
             $customer = new MachineModel();
             $customer->setName($properties['name']);
             $em->persist($customer);

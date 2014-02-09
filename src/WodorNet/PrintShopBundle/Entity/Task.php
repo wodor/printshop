@@ -5,7 +5,7 @@ namespace WodorNet\PrintShopBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="TaskRepository")
  */
 class Task
 {

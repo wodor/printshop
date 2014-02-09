@@ -45,6 +45,12 @@ class Dashboard extends Page
 
     public function hasFollowingValueInDescritpionOfTask($number, $description)
     {
+        return $this->hasFollowingValueInElementOfTask($number, $description, '.description');
+    }
+
+
+    public function hasFollowingValueInElementOfTask($number, $value, $elementSelector)
+    {
         $taskidSelector = 'div#task_' . $number;
         $task = $this->getElement('Tasks')->find('css', $taskidSelector);
 
@@ -52,13 +58,13 @@ class Dashboard extends Page
             throw new LogicException($taskidSelector . 'not found');
         }
 
-        $descriptionElement = $task->find('css', '.description');
+        $descriptionElement = $task->find('css', $elementSelector);
         if(!$descriptionElement instanceof NodeElement) {
-            throw new LogicException('#description not found in ' . $taskidSelector);
+            throw new LogicException($elementSelector . ' not found in ' . $taskidSelector);
         }
 
-        if($descriptionElement->getText() != $description) {
-            throw new LogicException('Description: ' . $description . 'expected, ' . $descriptionElement->getText() . ' found');
+        if($descriptionElement->getText() != $value) {
+            throw new LogicException($elementSelector. ': ' . $value . ' expected, ' . $descriptionElement->getText() . ' found');
         }
 
         return true;

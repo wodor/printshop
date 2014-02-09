@@ -121,6 +121,16 @@ class FeatureContext extends PageObjectContext implements KernelAwareInterface
     }
 
     /**
+     * @Given /^powinienem widziec "([^"]*)" w rubryce maszyna zlecenia "(\d+)"$/
+     */
+    public function powinienemWidziecWRubryceMaszyna($machineModel, $taskNumber)
+    {
+        $dashboard = $this->getPage('Dashboard');
+        $dashboard->open();
+        expect($dashboard)->toHaveFollowingValueInElementOfTask($taskNumber, $machineModel, '.machinemodel');
+    }
+
+    /**
      * @Given /^klikam na link Edytuj przy zleceniu "([^"]*)"$/
      */
     public function klikamNaLinkEdytujPrzyZleceniu($arg1)

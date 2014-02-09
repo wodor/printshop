@@ -22,7 +22,7 @@ Scenariusz: Wyswietlanie listy zlecen
     |  5    |
     |  4    |
   I powinienem widziec "dlugitext" w specyfikacji zlecenia "6"
-
+  I powinienem widziec "agfa" w rubryce maszyna zlecenia "6"
 
 
 

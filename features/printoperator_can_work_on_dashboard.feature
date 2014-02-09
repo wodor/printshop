@@ -28,12 +28,27 @@ Scenariusz: Wyswietlanie listy zlecen
     |  6    |
     |  5    |
     |  4    |
-#  I powinienem widziec "dlugitext" w specyfikacji zlecenia "5"
-#  I powinienem widziec "agfa" w rubryce maszyna zlecenia "5"
+  I powinienem widziec "dlugitext" w specyfikacji zlecenia "5"
+  I powinienem widziec "agfa" w rubryce maszyna zlecenia "5"
+
+
+Scenariusz: Operator maszyn moze zmieniac status zlecenia przyciskiem na liscie
+  Zakładając że jestem zalogowany jako operator
+  Kiedy klikam przycisk "W produkcji" dla zlecenia "6"
+  Wtedy powienienem widziec status "w produkcji" dla zlecenia "6"
+  Kiedy klikam przycisk "Zrobione" dla zlecenia "6"
+  Wtedy na pulpicie widzę następujące zlecenia:
+    | numer |
+    |  5    |
+    |  4    |
+  Kiedy klikam link "Zlecenia wykonane"
+  Wtedy na pulpicie widzę następujące zlecenia:
+    | numer |
+    |  6    |
+  I powinienem widziec status "Zrobione" dla zlecenia "6"
 
 
 
-#Scenariusz: Operator maszyn moze zmieniac status zlecenia przyciskiem na liscie
 #Scenariusz: operator maszyn wielkoformatowych moze zmieniac zlecenie
 #Scenariusz: Kierownik moze zmieniac priorytet zleceń
 #Scenariusz: Gdy zmieniane jest zlecenie mam dostęp do poprzedniej wersji

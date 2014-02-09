@@ -2,15 +2,11 @@
 
 namespace Context;
 
-use Behat\Behat\Context\ClosuredContextInterface,
-    Behat\Behat\Context\TranslatedContextInterface,
-    Behat\Symfony2Extension\Context\KernelAwareInterface,
-    Behat\Behat\Context\BehatContext,
-    Symfony\Component\HttpKernel\KernelInterface,
-    Behat\Behat\Exception\PendingException;
-use Behat\Gherkin\Node\PyStringNode,
-    Behat\Gherkin\Node\TableNode;
-use Behat\MinkExtension\Context\MinkContext;
+use Behat\Symfony2Extension\Context\KernelAwareInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
+use Behat\Behat\Exception\PendingException;
+use Behat\Gherkin\Node\TableNode;
+use SensioLabs\Behat\PageObjectExtension\Context\PageObjectContext;
 use WodorNet\PrintShopBundle\Entity\Customer;
 use WodorNet\PrintShopBundle\Entity\MachineModel;
 use WodorNet\PrintShopBundle\Entity\Task;
@@ -18,7 +14,7 @@ use WodorNet\PrintShopBundle\Entity\Task;
 /**
  * Features context.
  */
-class FeatureContext extends MinkContext implements KernelAwareInterface
+class FeatureContext extends PageObjectContext implements KernelAwareInterface
 {
     /**
     * @var KernelInterface
@@ -103,11 +99,24 @@ class FeatureContext extends MinkContext implements KernelAwareInterface
     }
 
     /**
+     * @Given /^na pulpicie widzę nastepujace zlecenia:$/
+     */
+    public function naPulpicieWidzeNastepujaceZlecenia(TableNode $table)
+    {
+        $hash = $table->getHash();
+
+        $dashboard = $this->getPage('Dashboard');
+        $dashboard->open();
+        expect($dashboard)->toHaveTaskOnTheList($hash[0]['numer']);
+
+    }
+
+    /**
      * @Given /^klikam przycisk dodaj zlecenie$/
      */
     public function klikamPrzyciskDodajZlecenie()
     {
-        throw new PendingException();
+        throw new \PhpSpec\Exception\Example\PendingException();
     }
 
     /**
@@ -154,14 +163,6 @@ class FeatureContext extends MinkContext implements KernelAwareInterface
      * @Given /^ze jestem zalogowany jako operator$/
      */
     public function zeJestemZalogowanyJakoOperator()
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @Given /^na pulpicie widzę “druk” zobaczyc nastepujace zlecenia:$/
-     */
-    public function naPulpicieWidzeDrukZobaczycNastepujaceZlecenia(TableNode $table)
     {
         throw new PendingException();
     }

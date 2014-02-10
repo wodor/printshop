@@ -10,9 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
 class Task
 {
     const STATUS_READY = 'ready';
-    const STATUS_INPROGRESS = 'in progress';
-    const STATUS_ONHOLD = 'on hold';
+    const STATUS_INPROGRESS = 'inprogress';
+    const STATUS_ONHOLD = 'onhold';
     const STATUS_DONE = 'done';
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -69,6 +70,14 @@ class Task
      * @ORM\JoinColumn(name="machinemodel_id", referencedColumnName="id")
      */
     private $machineModel;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * @param string $number

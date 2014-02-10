@@ -1,4 +1,6 @@
 {% extends "base.html.twig" %}
+{% set inprogress = constant('WodorNet\\PrintShopBundle\\Entity\\Task::STATUS_INPROGRESS') %}
+{% set done = constant('WodorNet\\PrintShopBundle\\Entity\\Task::STATUS_DONE') %}
 {% block body %}
 
     <style>
@@ -6,14 +8,24 @@
             display: none;
         }
     </style>
+<form>
 <div id="tasks">
+    <h1>{% trans %}Zadania{% endtrans %}</h1>
+    <p><a href="{{ url('printshop_dashboard_status', {status:done}) }}">{% trans %}Zlecenia wykonane{% endtrans %}</a></p>
     {% for task in tasks %}
     <div id="task_{{ task.number }}" class="task">
         Numer: {{ task.number }}
         <span class="description">{{ task.description }}</span>
         <span class="machinemodel">{{ task.machineModel.name }}</span>
+        <span class="status">{{ ("status_" ~ task.status)|trans }}</span>
+        <a id="status_{{ inprogress }}_{{ task.id }}" href="{{ url("printshop_task_setstatus", {id: task.id, status: inprogress}) }}">
+            <input type="button" value="{{ ("status_" ~ inprogress)|trans }}"/>
+        </a> ||
+        <a id="status_{{ done }}_{{ task.id }}" href="{{ url("printshop_task_setstatus", {id: task.id, status: done}) }}">
+            <input type="button" value="{{ ("status_" ~ done)|trans }}"/>
+        </a>
     </div>
     {% endfor %}
 </div>
-
+</form>
 {% endblock body %}

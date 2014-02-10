@@ -12,13 +12,13 @@ class Dashboard extends Page
 
 
     protected $elements = array(
-        'Tasks' => array('css' => 'div#tasks')
+        'tasks' => array('css' => 'div#tasks')
     );
 
     public function hasFollowingTasksOnTheListInOrder($tasksHash)
     {
         $numberKey = 'numer';
-        $tasks = $this->getElement('Tasks')->findAll('css','div.task');
+        $tasks = $this->getElement('tasks')->findAll('css','div.task');
         $tasksList = array_column($tasksHash, $numberKey, $numberKey);
         $tasksFound  = array();
         foreach($tasks as $taskElement) {
@@ -52,7 +52,7 @@ class Dashboard extends Page
     public function hasFollowingValueInElementOfTask($number, $value, $elementSelector)
     {
         $taskidSelector = 'div#task_' . $number;
-        $task = $this->getElement('Tasks')->find('css', $taskidSelector);
+        $task = $this->getElement('tasks')->find('css', $taskidSelector);
 
         if(!$task instanceof NodeElement) {
             throw new LogicException($taskidSelector . 'not found');

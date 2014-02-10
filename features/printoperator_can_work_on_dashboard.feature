@@ -14,10 +14,10 @@ Zakładając że są następujące zlecenia:
     | Makro  | 2014-01-31   |  6    | baner  | dlugitext    | 3         | oczekujące  | agfa    |
     | Makro  | 2014-01-30   |  5    | baner2 | dlugitext    | 2         | oczekujące  | agfa    |
     | Makro  | 2014-01-29   |  4    | baner2 | dlugitext    | 1         | oczekujące  | agfa    |
-    | BMW    | 2014-02-03   |  7    | folia  | dlugitext    | 2         | w produkcji | roland  |
+    | BMW    | 2014-02-03   |  7    | folia  | dlugitext    | 2         | w trakcie   | roland  |
     | Rolex  | 2014-02-05   |  8    | OWV    | dlugitext    | 3         | wstrzymane  | roland  |
     | ToiToi | 2014-02-02   |  9    | PCV    | dlugitext    | 2         | zakończone  | roland  |
-    | ToiToi | 2014-02-02   |  9    | PCV    | cncnncncc    | 2         | oczekujące  | cnc     |
+    | ToiToi | 2014-02-02   |  10   | PCV    | cncnncncc    | 2         | oczekujące  | cnc     |
 
 Scenariusz: Wyswietlanie listy zlecen
   Zakładając że jestem zalogowany jako operator
@@ -28,24 +28,33 @@ Scenariusz: Wyswietlanie listy zlecen
     |  6    |
     |  5    |
     |  4    |
+    |  7    |
   I powinienem widziec "dlugitext" w specyfikacji zlecenia "5"
   I powinienem widziec "agfa" w rubryce maszyna zlecenia "5"
 
 
 Scenariusz: Operator maszyn moze zmieniac status zlecenia przyciskiem na liscie
   Zakładając że jestem zalogowany jako operator
-  Kiedy klikam przycisk "W produkcji" dla zlecenia "6"
-  Wtedy powienienem widziec status "w produkcji" dla zlecenia "6"
-  Kiedy klikam przycisk "Zrobione" dla zlecenia "6"
-  Wtedy na pulpicie widzę następujące zlecenia:
+  Kiedy klikam przycisk statusu "W trakcie" dla zlecenia "6"
+  Wtedy na pulpicie widzę nastepujace zlecenia:
+      | numer |
+      |  6    |
+      |  5    |
+      |  4    |
+      |  7    |
+  I powienienem widziec status "W trakcie" dla zlecenia "6"
+  Kiedy klikam przycisk statusu "Zakończone" dla zlecenia "6"
+  Wtedy na pulpicie widzę nastepujace zlecenia:
     | numer |
     |  5    |
     |  4    |
-  Kiedy klikam link "Zlecenia wykonane"
-  Wtedy na pulpicie widzę następujące zlecenia:
+    |  7    |
+  Kiedy kliknę na link "Zlecenia wykonane"
+  Wtedy widzę nastepujace zlecenia:
     | numer |
     |  6    |
-  I powinienem widziec status "Zrobione" dla zlecenia "6"
+    |  9    |
+  I powienienem widziec status "Zakończone" dla zlecenia "6"
 
 
 

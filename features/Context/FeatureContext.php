@@ -2,6 +2,7 @@
 
 namespace Context;
 
+use Behat\MinkExtension\Context\MinkContext;
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Behat\Behat\Exception\PendingException;
@@ -15,7 +16,7 @@ use WodorNet\PrintShopBundle\Entity\Task;
 /**
  * Features context.
  */
-class FeatureContext extends PageObjectContext implements KernelAwareInterface
+class FeatureContext extends MinkContext implements KernelAwareInterface
 {
     /**
     * @var KernelInterface
@@ -31,6 +32,7 @@ class FeatureContext extends PageObjectContext implements KernelAwareInterface
     public function __construct(array $parameters = array())
     {
         $this->useContext('doctrine', new DoctrineContext($parameters));
+        $this->useContext('task', new TaskContext($this));
     }
 
     /**
@@ -48,7 +50,7 @@ class FeatureContext extends PageObjectContext implements KernelAwareInterface
 
     public function getTaskRepository()
     {
-        $this->getServiceProvider()->getEntityManager()->getRepository('WodorNetPrintShopBundle:Task');
+        return $this->getServiceProvider()->getEntityManager()->getRepository('WodorNetPrintShopBundle:Task');
     }
 
     /**
@@ -72,114 +74,12 @@ class FeatureContext extends PageObjectContext implements KernelAwareInterface
     }
 
     /**
-     * @Given /^że są następujące zlecenia:$/
-     */
-    public function thereAreFollowingTasks(TableNode $table)
-    {
-        foreach($table->getHash() as $taskExample) {
-
-            $customer = $this->findOrCreateCustomer(['name' => $taskExample['klient']]);
-            $machineModel = $this->findOrCreateMachineModel(['name' => $taskExample['maszyna']]);
-            $task = new Task();
-
-            $task->setCustomer($customer);
-            $task->setDeadline(new \DateTime($taskExample['Deadline']));
-            $task->setNumber($taskExample['numer']);
-            $task->setTitle($taskExample['opis']);
-            $task->setDescription($taskExample['specyfikacja']);
-            $task->setPriority($taskExample['priorytet']);
-            $task->setStatus($this->polishToSystemStatus($taskExample['status']));
-            $task->setMachineModel($machineModel);
-            $this->getServiceProvider()->getEntityManager()->persist($task);
-        }
-        $this->getServiceProvider()->getEntityManager()->flush();
-    }
-
-    /**
-     * @Given /^że są następujące modele maszyn:$/
-     */
-    public function zeSaNastepujaceModeleMaszyn(TableNode $table)
-    {
-        foreach($table->getHash() as $modelExample) {
-            $model = new MachineModel();
-            $model->setName($modelExample['nazwa']);
-            $model->setType($modelExample['typ']);
-            $this->getServiceProvider()->getEntityManager()->persist($model);
-        }
-        $this->getServiceProvider()->getEntityManager()->flush();
-
-    }
-
-
-    private function findOrCreateCustomer(array $properties)
-    {
-        $em = $this->getServiceProvider()->getEntityManager();
-        $repo = $em->getRepository("WodorNetPrintShopBundle:Customer");
-        $customer = $repo->findOneByName($properties['name']);
-
-        if(!$customer instanceof Customer) {
-            $customer = new Customer();
-            $customer->setName($properties['name']);
-            $em->persist($customer);
-        }
-        return $customer;
-    }
-
-    private function findOrCreateMachineModel(array $properties)
-    {
-        $em = $this->getServiceProvider()->getEntityManager();
-        $repo = $em->getRepository("WodorNetPrintShopBundle:MachineModel");
-        $customer = $repo->findOneByName($properties['name']);
-
-        if(!$customer instanceof MachineModel) {
-            if(!isset($properties['type'])) {
-                throw new \LogicException("Can't add model without type");
-            }
-            $customer = new MachineModel();
-            $customer->setName($properties['name']);
-            $em->persist($customer);
-        }
-        return $customer;
-    }
-
-    /**
     * @Given /^że jestem zalogowany jako .*$/
     */
     public function zeJestemZalogowanyJakoKierownik()
     {
         // for now we just pretend
         //https://gist.github.com/jakzal/825496
-    }
-
-    /**
-     * @Given /^na pulpicie widzę nastepujace zlecenia:$/
-     */
-    public function naPulpicieWidzeNastepujaceZlecenia(TableNode $table)
-    {
-        $hash = $table->getHash();
-        $dashboard = $this->getPage('Dashboard');
-        $dashboard->open();
-        expect($dashboard)->toHaveFollowingTasksOnTheListInOrder($hash);
-    }
-
-    /**
-     * @Given /^powinienem widziec "([^"]*)" w specyfikacji zlecenia "(\d+)"$/
-     */
-    public function powinienemWidziecDlugitextWSpecyfikacjiZlecenia($description, $taskNumber)
-    {
-        $dashboard = $this->getPage('Dashboard');
-        $dashboard->open();
-        expect($dashboard)->toHaveFollowingValueInDescritpionOfTask($taskNumber, $description);
-    }
-
-    /**
-     * @Given /^powinienem widziec "([^"]*)" w rubryce maszyna zlecenia "(\d+)"$/
-     */
-    public function powinienemWidziecWRubryceMaszyna($machineModel, $taskNumber)
-    {
-        $dashboard = $this->getPage('Dashboard');
-        $dashboard->open();
-        expect($dashboard)->toHaveFollowingValueInElementOfTask($taskNumber, $machineModel, '.machinemodel');
     }
 
     /**
@@ -236,17 +136,6 @@ class FeatureContext extends PageObjectContext implements KernelAwareInterface
     public function wHistoriiZmianZleceniaWidze($arg1, TableNode $table)
     {
         throw new PendingException();
-    }
-
-    private function polishToSystemStatus($statusString)
-    {
-        $map = array(
-            'oczekujące' => Task::STATUS_READY,
-            'w produkcji' => Task::STATUS_INPROGRESS,
-            'wstrzymane' => Task::STATUS_ONHOLD,
-            'zakończone' => Task::STATUS_DONE
-        );
-        return $map[$statusString];
     }
 
 }
